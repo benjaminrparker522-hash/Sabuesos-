@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sabuesos GYM</title>
-    
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#09090b">
-    
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/jpeg" href="https://i.pinimg.com/736x/ec/64/0e/ec640e704e672729959e13d1cc7ca7c6.jpg">
     <link rel="apple-touch-icon" href="https://i.pinimg.com/736x/ec/64/0e/ec640e704e672729959e13d1cc7ca7c6.jpg">
-    
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: #09090b; color: #fafafa; padding-bottom: 40px; }
@@ -21,13 +18,9 @@
         .title span { color: #dc2626; }
         .subtitle { font-size: 10px; color: #a1a1aa; letter-spacing: 1px; margin-top: 2px; }
         .container { max-width: 450px; margin: 0 auto; padding: 15px; }
-        
-        /* FRASES DINÁMICAS */
         .card-frase { background: linear-gradient(135deg, #18181b, #09090b); border: 1px solid #27272a; padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 15px; border-left: 4px solid #dc2626; }
         .card-frase p { font-size: 12px; color: #a1a1aa; font-style: italic; }
         .card-frase h2 { font-size: 14px; color: #ffffff; margin-top: 4px; font-weight: bold; }
-
-        /* PANEL DE TIEMPOS */
         .panel-tiempo { background-color: #18181b; border: 1px solid #27272a; border-radius: 8px; display: flex; padding: 12px; gap: 10px; margin-bottom: 15px; }
         .col-tiempo { flex: 1; background-color: #09090b; border-radius: 6px; padding: 8px; text-align: center; border: 1px solid #3f3f46; }
         .label-t { font-size: 10px; color: #a1a1aa; text-transform: uppercase; font-weight: bold; }
@@ -36,25 +29,18 @@
         .btn-t-container { display: flex; gap: 5px; justify-content: center; }
         .btn-t { width: 48%; background-color: #dc2626; color: white; border: none; padding: 5px; border-radius: 4px; font-size: 10px; font-weight: bold; cursor: pointer; }
         .btn-descanso { background-color: #f59e0b; }
-        
-        /* BOTONES DÍAS */
         .dias-nav { display: flex; overflow-x: auto; gap: 6px; margin-bottom: 15px; padding-bottom: 5px; }
         .btn-dia { flex: 0 0 auto; background-color: #18181b; border: 1px solid #27272a; color: #a1a1aa; padding: 8px 12px; border-radius: 6px; font-size: 11px; font-weight: bold; text-align: center; cursor: pointer; }
         .btn-dia span { display: block; font-size: 8px; color: #71717a; margin-top: 2px; }
         .btn-dia.active { background-color: #dc2626; color: white; border-color: #dc2626; }
         .btn-dia.active span { color: #fee2e2; }
-
-        /* RUTINAS */
         .seccion-rutina { display: none; }
         .seccion-rutina.active { display: block; }
         .categoria-titulo { font-size: 14px; font-weight: bold; color: #ffffff; margin: 15px 0 8px 0; display: flex; align-items: center; gap: 5px; text-transform: uppercase; border-left: 3px solid #dc2626; padding-left: 6px; }
-        
         .card-ejercicio { background-color: #18181b; border: 1px solid #27272a; border-radius: 8px; padding: 12px; margin-bottom: 10px; }
         .ejercicio-nombre { font-size: 14px; font-weight: bold; color: #ffffff; }
         .ejercicio-meta { font-size: 11px; color: #a1a1aa; margin-top: 2px; }
         .consejo-box { background-color: rgba(220, 38, 38, 0.1); border-left: 2px solid #dc2626; padding: 6px; margin-top: 8px; border-radius: 0 4px 4px 0; font-size: 11px; color: #fca5a5; }
-        
-        /* FILAS DE SERIES */
         .tabla-series { width: 100%; margin-top: 10px; border-collapse: collapse; }
         .tabla-series th { font-size: 9px; color: #71717a; text-align: left; padding-bottom: 4px; text-transform: uppercase; }
         .fila-serie { border-top: 1px solid #27272a; }
@@ -65,28 +51,24 @@
     </style>
 </head>
 <body>
-
     <header>
         <div class="title">SABUESOS<span>-</span></div>
         <div class="subtitle">KIM GUN-WOO / HONG WOO-JIN STYLE</div>
     </header>
-
     <div class="container">
         <div class="card-frase">
             <p>Frase del Día</p>
             <h2 id="txt-frase">"¡Corazón de boxeador!"</h2>
         </div>
-
         <div class="panel-tiempo">
             <div class="col-tiempo">
-                <div class="label-t">⏱️ Tiempo Total</div>
+                <div class="label-t">⏱️ Tiempo</div>
                 <div class="num-t" id="timer-total">00:00:00</div>
                 <div class="btn-t-container">
                     <button class="btn-t" id="btn-cron-play" onclick="toggleCronometro()">Empezar</button>
                     <button class="btn-t" style="background-color:#3f3f46;" onclick="resetCronometro()">Reset</button>
                 </div>
             </div>
-            <div class="col-col-tiempo" style="width:2px; background-color:#27272a;"></div>
             <div class="col-tiempo">
                 <div class="label-t">⏳ Descanso</div>
                 <div class="num-t num-descanso" id="timer-descanso">02:00</div>
@@ -96,7 +78,6 @@
                 </div>
             </div>
         </div>
-
         <div class="dias-nav">
             <button class="btn-dia active" onclick="cambiarDia('lun')">LUN<span>EMP</span></button>
             <button class="btn-dia" onclick="cambiarDia('mar')">MAR<span>TIR</span></button>
@@ -106,134 +87,90 @@
             <button class="btn-dia" onclick="cambiarDia('sab')">SÁB<span>P+A</span></button>
         </div>
 
-        <div id="rutina-lun" class="seccion-rutina active">
-            <div class="categoria-titulo">🔥 PECHO (Fuerza Pesada)</div>
+                <div id="rutina-lun" class="seccion-rutina active">
+            <div class="categoria-titulo">🔥 PECHO (Lunes)</div>
             <div class="card-ejercicio">
                 <div class="ejercicio-nombre">1. Press Inclinado con Mancuernas</div>
                 <div class="ejercicio-meta">3 series × 8-9 reps</div>
-                <div class="consejo-box">💡 Falla en la repetición 8 o 9 ajustando bien las cargas.</div>
                 <table class="tabla-series">
-                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
-                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kg"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kg"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kg"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
                 </table>
             </div>
             <div class="card-ejercicio">
-                <div class="ejercicio-nombre">2. Press Plano en Máquina o Barra</div>
+                <div class="ejercicio-nombre">2. Press Plano en Máquina</div>
                 <div class="ejercicio-meta">3 series × 8-9 reps</div>
-                <div class="consejo-box">💡 Baja controlado y explota en la subida sin bloquear codos.</div>
-                <table class="tabla-series">
-                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
-                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                </table>
             </div>
-
-            <div class="categoria-titulo">🎯 HOMBRO (Construcción)</div>
-            <div class="card-ejercicio">
-                <div class="ejercicio-nombre">3. Press Militar con Mancuernas (Sentado)</div>
-                <div class="ejercicio-meta">3 series × 10-12 reps</div>
-                <div class="consejo-box">💡 Espalda firme contra el banco, sube controlado.</div>
-                <table class="tabla-series">
-                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
-                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                </table>
-            </div>
-            <div class="card-ejercicio">
-                <div class="ejercicio-nombre">4. Elevaciones Laterales con Polea o Mancuerna</div>
-                <div class="ejercicio-meta">3 series × 12-15 reps</div>
-                <div class="consejo-box">💡 Mantén un segundo arriba para bombear el deltoides lateral.</div>
-                <table class="tabla-series">
-                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
-                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                </table>
-            </div>
-
-            <div class="categoria-titulo">⚡ TRÍCEPS (Remate)</div>
-            <div class="card-ejercicio">
-                <div class="ejercicio-nombre">5. Extensión en Polea Alta con Cuerda</div>
-                <div class="ejercicio-meta">3 series × 12-15 reps</div>
-                <div class="consejo-box">💡 Abre la cuerda por completo abajo del recorrido.</div>
-                <table class="tabla-series">
-                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
-                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                </table>
-            </div>
-            <div class="card-ejercicio">
-                <div class="ejercicio-nombre">6. Fondos en Paralelas o Máquina</div>
-                <div class="ejercicio-meta">3 series × Al Fallo</div>
-                <div class="consejo-box">💡 Tronco erguido para enfocar la tensión limpia en los tríceps.</div>
-                <table class="tabla-series">
-                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
-                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                </table>
-            </div>
+            <div class="categoria-titulo">🎯 HOMBRO</div>
+            <div class="card-ejercicio"><div class="ejercicio-nombre">3. Press Militar Mancuernas</div><div class="ejercicio-meta">3 x 10-12</div></div>
+            <div class="card-ejercicio"><div class="ejercicio-nombre">4. Elevaciones Laterales</div><div class="ejercicio-meta">3 x 12-15</div></div>
+            <div class="categoria-titulo">⚡ TRÍCEPS</div>
+            <div class="card-ejercicio"><div class="ejercicio-nombre">5. Polea Alta con Cuerda</div><div class="ejercicio-meta">3 x 12-15</div></div>
+            <div class="card-ejercicio"><div class="ejercicio-nombre">6. Fondos en Paralelas</div><div class="ejercicio-meta">3 x Al Fallo</div></div>
         </div>
 
         <div id="rutina-jue" class="seccion-rutina">
-            <div class="categoria-titulo">🔥 PECHO (Fuerza Pesada)</div>
+            <div class="categoria-titulo">🔥 PECHO (Jueves)</div>
             <div class="card-ejercicio">
                 <div class="ejercicio-nombre">1. Press Inclinado con Mancuernas</div>
                 <div class="ejercicio-meta">3 series × 8-9 reps</div>
-                <div class="consejo-box">💡 Falla en la repetición 8 o 9 ajustando bien las cargas.</div>
-                <table class="tabla-series">
-                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
-                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                </table>
             </div>
             <div class="card-ejercicio">
-                <div class="ejercicio-nombre">2. Press Plano en Máquina o Barra</div>
+                <div class="ejercicio-nombre">2. Press Plano en Barra</div>
                 <div class="ejercicio-meta">3 series × 8-9 reps</div>
-                <div class="consejo-box">💡 Baja controlado y explota en la subida sin bloquear codos.</div>
-                <table class="tabla-series">
-                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
-                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                </table>
             </div>
+            <div class="categoria-titulo">🎯 HOMBRO</div>
+            <div class="card-ejercicio"><div class="ejercicio-nombre">3. Press Militar Mancuernas</div><div class="ejercicio-meta">3 x 10-12</div></div>
+            <div class="card-ejercicio"><div class="ejercicio-nombre">4. Elevaciones Laterales</div><div class="ejercicio-meta">3 x 12-15</div></div>
+            <div class="categoria-titulo">⚡ TRÍCEPS</div>
+            <div class="card-ejercicio"><div class="ejercicio-nombre">5. Polea Alta con Cuerda</div><div class="ejercicio-meta">3 x 12-15</div></div>
+            <div class="card-ejercicio"><div class="ejercicio-nombre">6. Fondos en Paralelas</div><div class="ejercicio-meta">3 x Al Fallo</div></div>
+        </div>
 
-            <div class="categoria-titulo">🎯 HOMBRO (Construcción)</div>
-            <div class="card-ejercicio">
-                <div class="ejercicio-nombre">3. Press Militar con Mancuernas (Sentado)</div>
-                <div class="ejercicio-meta">3 series × 10-12 reps</div>
-                <div class="consejo-box">💡 Espalda firme contra el banco, sube controlado.</div>
-                <table class="tabla-series">
-                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
-                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                </table>
-            </div>
-            <div class="card-ejercicio">
-                <div class="ejercicio-nombre">4. Elevaciones Laterales con Polea o Mancuerna</div>
-                <div class="ejercicio-meta">3 series × 12-15 reps</div>
-                <div class="consejo-box">💡 Mantén un segundo arriba para bombear el deltoides lateral.</div>
-                <table class="tabla-series">
-                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
-                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
-                </table>
-            </div>
+        <div id="rutina-mar" class="seccion-rutina"><div class="categoria-titulo">🪵 ESPALDA + BÍCEPS</div></div>
+        <div id="rutina-mie" class="seccion-rutina"><div class="categoria-titulo">🦵 PIERNA + ABDOMEN</div></div>
+        <div id="rutina-vie" class="seccion-rutina"><div class="categoria-titulo">🪵 ESPALDA + BÍCEPS</div></div>
+        <div id="rutina-sab" class="seccion-rutina"><div class="categoria-titulo">🦵 PIERNA + ABDOMEN</div></div>
+    </div>
 
-            <div class="categoria-titulo">⚡ TRÍCEPS (Remate)</div>
-            <div class="card-ejercicio">
-                <div class="ejercicio-nombre">5. Extensión en Polea Alta con Cuerda</div>
-                <div class="ejercicio-meta">3 series × 12-15 reps</div>
-                <div class="consejo-box">💡 Abre la cuerda por completo abajo del recorrido.</div>
-                <table class="tabla-series">
-                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
-           
+    <script>
+        const frases = ["¡Corazón de boxeador! Un boxeador nunca se rinde.", "Si tienes mentalidad de peleador, puedes con todo.", "El dolor es temporal, el orgullo en el ring es eterno."];
+        document.getElementById('txt-frase').innerText = `"${frases[Math.floor(Math.random() * frases.length)]}"`;
+
+        function cambiarDia(d) {
+            document.querySelectorAll('.seccion-rutina').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.btn-dia').forEach(b => b.classList.remove('active'));
+            document.getElementById('rutina-' + d).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        let cron, cRun = false, cTime = 0;
+        function toggleCronometro() {
+            let b = document.getElementById('btn-cron-play');
+            if (!cRun) {
+                cRun = true; b.innerText = "Pausar"; b.style.backgroundColor = "#71717a";
+                cron = setInterval(() => {
+                    cTime++;
+                    let h = Math.floor(cTime / 3600), m = Math.floor((cTime % 3600) / 60), s = cTime % 60;
+                    document.getElementById('timer-total').innerText = (h<10?"0"+h:h)+":"+(m<10?"0"+m:m)+":"+(s<10?"0"+s:s);
+                }, 1000);
+            } else { cRun = false; b.innerText = "Reanudar"; b.style.backgroundColor = "#dc2626"; clearInterval(cron); }
+        }
+        function resetCronometro() { clearInterval(cron); cRun = false; cTime = 0; document.getElementById('timer-total').innerText = "00:00:00"; document.getElementById('btn-cron-play').innerText = "Empezar"; document.getElementById('btn-cron-play').style.backgroundColor = "#dc2626"; }
+
+        let desc, dRun = false, dTime = 120;
+        function toggleDescanso() {
+            let b = document.getElementById('btn-desc-play');
+            if (!dRun) {
+                dRun = true; b.innerText = "Pausar"; b.style.backgroundColor = "#71717a";
+                desc = setInterval(() => {
+                    if (dTime > 0) { dTime--; let m = Math.floor(dTime / 60), s = dTime % 60; document.getElementById('timer-descanso').innerText = (m<10?"0"+m:m)+":"+(s<10?"0"+s:s); }
+                    else { clearInterval(desc); dRun = false; alert("¡Al ring!"); resetDescanso(); }
+                }, 1000);
+            } else { dRun = false; b.innerText = "Reanudar"; b.style.backgroundColor = "#f59e0b"; clearInterval(desc); }
+        }
+        function resetDescanso() { clearInterval(desc); dRun = false; dTime = 120; document.getElementById('timer-descanso').innerText = "02:00"; document.getElementById('btn-desc-play').innerText = "Iniciar"; document.getElementById('btn-desc-play').style.backgroundColor = "#f59e0b"; }
+    </script>
+</body>
+</html>
