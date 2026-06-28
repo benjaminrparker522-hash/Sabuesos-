@@ -2,256 +2,238 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sabuesos GYM</title>
     
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#09090b">
     
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/5253/5253928.png">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/5253/5253928.png">
     <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/jpeg" href="https://i.pinimg.com/736x/ec/64/0e/ec640e704e672729959e13d1cc7ca7c6.jpg">
+    <link rel="apple-touch-icon" href="https://i.pinimg.com/736x/ec/64/0e/ec640e704e672729959e13d1cc7ca7c6.jpg">
     
-
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: #09090b; color: #f4f4f5; font-family: system-ui, -apple-system, sans-serif; padding-bottom: 60px; }
-        header { background-color: #09090b; border-bottom: 2px solid #dc2626; padding: 15px; text-align: center; }
-        .title { font-size: 24px; font-weight: 800; letter-spacing: 1px; color: #ffffff; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: #09090b; color: #fafafa; padding-bottom: 40px; }
+        header { background-color: #09090b; border-bottom: 2px solid #dc2626; text-align: center; padding: 15px 0; font-weight: bold; }
+        .title { font-size: 24px; letter-spacing: 2px; color: #ffffff; }
         .title span { color: #dc2626; }
-        .subtitle { font-size: 10px; color: #a1a1aa; letter-spacing: 2px; margin-top: 2px; }
+        .subtitle { font-size: 10px; color: #a1a1aa; letter-spacing: 1px; margin-top: 2px; }
         .container { max-width: 450px; margin: 0 auto; padding: 15px; }
-        .card-frase { background: linear-gradient(to right, #18181b, #2d0606, #18181b); border: 1px solid #27272a; padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: center; }
-        .card-frase p { font-size: 11px; color: #ef4444; font-weight: bold; letter-spacing: 1px; }
-        .card-frase h2 { font-size: 14px; font-weight: bold; margin-top: 5px; color: #f4f4f5; }
         
-        /* PANEL DE TIEMPO */
-        .panel-tiempo { background-color: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; gap: 10px; }
-        .col-tiempo { flex: 1; background-color: #09090b; padding: 10px; border-radius: 8px; border: 1px solid #27272a; text-align: center; }
-        .label-t { font-size: 10px; color: #a1a1aa; font-weight: bold; display: block; margin-bottom: 2px; }
-        .num-t { font-size: 20px; font-weight: 900; color: #ffffff; }
-        .num-descanso { color: #f59e0b; }
-        .btn-t { width: 100%; background-color: #27272a; color: white; border: none; padding: 6px; border-radius: 6px; font-size: 10px; font-weight: bold; margin-top: 5px; cursor: pointer; }
-        .btn-timer { background-color: #d97706; }
-        .blink { animation: parpadeo 1s infinite; }
-        @keyframes parpadeo { 0%, 100% { background-color: #09090b; } 50% { background-color: #7f1d1d; } }
+        /* FRASES DINÁMICAS */
+        .card-frase { background: linear-gradient(135deg, #18181b, #09090b); border: 1px solid #27272a; padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 15px; border-left: 4px solid #dc2626; }
+        .card-frase p { font-size: 12px; color: #a1a1aa; font-style: italic; }
+        .card-frase h2 { font-size: 14px; color: #ffffff; margin-top: 4px; font-weight: bold; }
 
-        /* CALENDARIO */
-        .grid-dias { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; background-color: #18181b; padding: 5px; border-radius: 12px; margin-bottom: 15px; }
-        .btn-dia { background: none; border: none; color: #a1a1aa; padding: 8px 2px; font-size: 11px; font-weight: bold; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; }
-        .btn-dia.activo { background-color: #dc2626; color: white; }
-
-        /* EJERCICIOS */
-        .card-ejercicio { background-color: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 15px; margin-bottom: 12px; }
-        .header-ej { display: flex; justify-content: space-between; align-items: flex-start; }
-        .badge { background-color: #3f0712; color: #f87171; font-size: 9px; font-weight: bold; padding: 2px 6px; border-radius: 4px; border: 1px solid #991b1b; text-transform: uppercase; }
-        .nom-ej { font-size: 14px; font-weight: bold; color: white; margin-top: 5px; }
-        .target-ej { font-size: 11px; color: #a1a1aa; margin-top: 2px; font-weight: 500; }
-        .btn-reg { background-color: #dc2626; color: white; border: none; font-size: 11px; font-weight: bold; padding: 6px 12px; border-radius: 8px; cursor: pointer; }
-        .tip-ej { background-color: #09090b; padding: 8px; border-radius: 8px; font-size: 10px; color: #a1a1aa; margin-top: 8px; border-left: 3px solid #dc2626; }
-        .row-set { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
-        .num-set { font-size: 11px; color: #71717a; font-weight: bold; width: 20px; }
-        .input-box { flex: 1; background-color: #09090b; border: 1px solid #27272a; color: white; padding: 6px; border-radius: 8px; text-align: center; font-size: 12px; font-weight: bold; }
+        /* PANEL DE TIEMPOS */
+        .panel-tiempo { background-color: #18181b; border: 1px solid #27272a; border-radius: 8px; display: flex; padding: 12px; gap: 10px; margin-bottom: 15px; }
+        .col-tiempo { flex: 1; background-color: #09090b; border-radius: 6px; padding: 8px; text-align: center; border: 1px solid #3f3f46; }
+        .label-t { font-size: 10px; color: #a1a1aa; text-transform: uppercase; font-weight: bold; }
+        .num-t { font-size: 20px; font-weight: bold; color: #ffffff; margin: 4px 0; }
+        .num-descanso { color: #f59e0b !important; }
+        .btn-t-container { display: flex; gap: 5px; justify-content: center; }
+        .btn-t { width: 48%; background-color: #dc2626; color: white; border: none; padding: 5px; border-radius: 4px; font-size: 10px; font-weight: bold; cursor: pointer; }
+        .btn-descanso { background-color: #f59e0b; }
         
-        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #dc2626; color: white; padding: 10px 20px; border-radius: 8px; font-size: 11px; font-weight: bold; display: none; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        /* BOTONES DÍAS */
+        .dias-nav { display: flex; overflow-x: auto; gap: 6px; margin-bottom: 15px; padding-bottom: 5px; }
+        .btn-dia { flex: 0 0 auto; background-color: #18181b; border: 1px solid #27272a; color: #a1a1aa; padding: 8px 12px; border-radius: 6px; font-size: 11px; font-weight: bold; text-align: center; cursor: pointer; }
+        .btn-dia span { display: block; font-size: 8px; color: #71717a; margin-top: 2px; }
+        .btn-dia.active { background-color: #dc2626; color: white; border-color: #dc2626; }
+        .btn-dia.active span { color: #fee2e2; }
+
+        /* RUTINAS */
+        .seccion-rutina { display: none; }
+        .seccion-rutina.active { display: block; }
+        .categoria-titulo { font-size: 14px; font-weight: bold; color: #ffffff; margin: 15px 0 8px 0; display: flex; align-items: center; gap: 5px; text-transform: uppercase; border-left: 3px solid #dc2626; padding-left: 6px; }
+        
+        .card-ejercicio { background-color: #18181b; border: 1px solid #27272a; border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+        .ejercicio-nombre { font-size: 14px; font-weight: bold; color: #ffffff; }
+        .ejercicio-meta { font-size: 11px; color: #a1a1aa; margin-top: 2px; }
+        .consejo-box { background-color: rgba(220, 38, 38, 0.1); border-left: 2px solid #dc2626; padding: 6px; margin-top: 8px; border-radius: 0 4px 4px 0; font-size: 11px; color: #fca5a5; }
+        
+        /* FILAS DE SERIES */
+        .tabla-series { width: 100%; margin-top: 10px; border-collapse: collapse; }
+        .tabla-series th { font-size: 9px; color: #71717a; text-align: left; padding-bottom: 4px; text-transform: uppercase; }
+        .fila-serie { border-top: 1px solid #27272a; }
+        .cell-num { font-size: 12px; font-weight: bold; color: #a1a1aa; width: 30px; padding: 8px 0; }
+        .cell-input { padding: 4px 0; }
+        .input-marca { width: 90%; background-color: #09090b; border: 1px solid #3f3f46; border-radius: 4px; padding: 6px; color: white; font-size: 12px; text-align: center; }
+        .input-marca:focus { border-color: #dc2626; outline: none; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1 class="title">SABUESOS <span>GYM</span></h1>
-        <div class="subtitle">KIM GUN-WOO STYLE • 57 KG • 18 AÑOS</div>
+        <div class="title">SABUESOS<span>-</span></div>
+        <div class="subtitle">KIM GUN-WOO / HONG WOO-JIN STYLE</div>
     </header>
 
     <div class="container">
         <div class="card-frase">
-            <p>La Ley del Sabueso</p>
-            <h2>"El dolor es temporal, el escudo es para siempre."</h2>
+            <p>Frase del Día</p>
+            <h2 id="txt-frase">"¡Corazón de boxeador!"</h2>
         </div>
 
         <div class="panel-tiempo">
             <div class="col-tiempo">
-                <span class="label-t">⏱️ TIEMPO TOTAL</span>
-                <div id="chrono-display" class="num-t">00:00:00</div>
-                <button onclick="toggleChrono()" id="btn-chrono-play" class="btn-t">▶ EMPEZAR</button>
+                <div class="label-t">⏱️ Tiempo Total</div>
+                <div class="num-t" id="timer-total">00:00:00</div>
+                <div class="btn-t-container">
+                    <button class="btn-t" id="btn-cron-play" onclick="toggleCronometro()">Empezar</button>
+                    <button class="btn-t" style="background-color:#3f3f46;" onclick="resetCronometro()">Reset</button>
+                </div>
             </div>
-            <div id="timer-box" class="col-tiempo">
-                <span class="label-t">⏳ DESCANSO</span>
-                <div id="timer-display" class="num-t num-descanso">03:00</div>
-                <button onclick="startRestTimer()" id="btn-timer-start" class="btn-t btn-timer">INICIAR 3 MIN</button>
+            <div class="col-col-tiempo" style="width:2px; background-color:#27272a;"></div>
+            <div class="col-tiempo">
+                <div class="label-t">⏳ Descanso</div>
+                <div class="num-t num-descanso" id="timer-descanso">02:00</div>
+                <div class="btn-t-container">
+                    <button class="btn-t btn-descanso" id="btn-desc-play" onclick="toggleDescanso()">Iniciar</button>
+                    <button class="btn-t" style="background-color:#3f3f46;" onclick="resetDescanso()">Reset</button>
+                </div>
             </div>
         </div>
 
-        <div class="grid-dias">
-            <button onclick="selectDay('lunes')" id="btn-lunes" class="btn-dia"><span>LUN</span><span style="font-size:8px; display:block; margin-top:2px;">EMP</span></button>
-            <button onclick="selectDay('martes')" id="btn-martes" class="btn-dia"><span>MAR</span><span style="font-size:8px; display:block; margin-top:2px;">TIR</span></button>
-            <button onclick="selectDay('miercoles')" id="btn-miercoles" class="btn-dia"><span>MIÉ</span><span style="font-size:8px;color:#ef4444; display:block; margin-top:2px;">P+A</span></button>
-            <button onclick="selectDay('jueves')" id="btn-jueves" class="btn-dia"><span>JUE</span><span style="font-size:8px; display:block; margin-top:2px;">EMP</span></button>
-            <button onclick="selectDay('viernes')" id="btn-viernes" class="btn-dia"><span>VIE</span><span style="font-size:8px;color:#ef4444; display:block; margin-top:2px;">T+A</span></button>
-            <button onclick="selectDay('sabado')" id="btn-sabado" class="btn-dia"><span>SÁB</span><span style="font-size:8px;color:#ef4444; display:block; margin-top:2px;">BOX</span></button>
-            <button onclick="selectDay('domingo')" id="btn-domingo" class="btn-dia"><span>DOM</span><span style="font-size:8px; display:block; margin-top:2px;">OFF</span></button>
+        <div class="dias-nav">
+            <button class="btn-dia active" onclick="cambiarDia('lun')">LUN<span>EMP</span></button>
+            <button class="btn-dia" onclick="cambiarDia('mar')">MAR<span>TIR</span></button>
+            <button class="btn-dia" onclick="cambiarDia('mie')">MIÉ<span>P+A</span></button>
+            <button class="btn-dia" onclick="cambiarDia('jue')">JUE<span>EMP</span></button>
+            <button class="btn-dia" onclick="cambiarDia('vie')">VIE<span>TIR</span></button>
+            <button class="btn-dia" onclick="cambiarDia('sab')">SÁB<span>P+A</span></button>
         </div>
 
-        <h3 id="routine-title" style="font-size:14px; margin-bottom:12px; font-weight:800; text-transform:uppercase;"></h3>
-        <div id="exercises-container"></div>
-    </div>
+        <div id="rutina-lun" class="seccion-rutina active">
+            <div class="categoria-titulo">🔥 PECHO (Fuerza Pesada)</div>
+            <div class="card-ejercicio">
+                <div class="ejercicio-nombre">1. Press Inclinado con Mancuernas</div>
+                <div class="ejercicio-meta">3 series × 8-9 reps</div>
+                <div class="consejo-box">💡 Falla en la repetición 8 o 9 ajustando bien las cargas.</div>
+                <table class="tabla-series">
+                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
+                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                </table>
+            </div>
+            <div class="card-ejercicio">
+                <div class="ejercicio-nombre">2. Press Plano en Máquina o Barra</div>
+                <div class="ejercicio-meta">3 series × 8-9 reps</div>
+                <div class="consejo-box">💡 Baja controlado y explota en la subida sin bloquear codos.</div>
+                <table class="tabla-series">
+                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
+                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                </table>
+            </div>
 
-    <div id="toast" class="toast">¡MARCA GUARDADA EN EL ESCUDO!</div>
+            <div class="categoria-titulo">🎯 HOMBRO (Construcción)</div>
+            <div class="card-ejercicio">
+                <div class="ejercicio-nombre">3. Press Militar con Mancuernas (Sentado)</div>
+                <div class="ejercicio-meta">3 series × 10-12 reps</div>
+                <div class="consejo-box">💡 Espalda firme contra el banco, sube controlado.</div>
+                <table class="tabla-series">
+                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
+                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                </table>
+            </div>
+            <div class="card-ejercicio">
+                <div class="ejercicio-nombre">4. Elevaciones Laterales con Polea o Mancuerna</div>
+                <div class="ejercicio-meta">3 series × 12-15 reps</div>
+                <div class="consejo-box">💡 Mantén un segundo arriba para bombear el deltoides lateral.</div>
+                <table class="tabla-series">
+                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
+                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                </table>
+            </div>
 
-    <script>
-        const workoutData = {
-            lunes: { title: "🥊 Empuje (Pecho/Hombro/Tríceps) • 2500 Kcal", exercises: [
-                { id: "l_press_inc", name: "1. Press Inclinado con Mancuernas", target: "3 series × 8-9 reps", type: "Fuerza Pesada", tip: "Falla en la repetición 8 o 9 con técnica impecable.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""}, {wt: "", reps: ""} ] },
-                { id: "l_press_maq", name: "2. Press Plano en Máquina", target: "3 series × 8-9 reps", type: "Fuerza Pesada", tip: "Baja controlado y explota arriba como un golpe recto.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""}, {wt: "", reps: ""} ] },
-                { id: "l_press_mil", name: "3. Press Militar con Mancuernas", target: "2 series × 8-9 reps", type: "Fuerza Pesada", tip: "Solo 2 series reales. No balancees la espalda.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""} ] },
-                { id: "l_vuelos", name: "4. Vuelos Laterales con Mancuernas", target: "3 series × 12-15 reps", type: "Bombeo", tip: "Para ganar hombros en 3D que sostengan la guardia.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""}, {wt: "", reps: ""} ] },
-                { id: "l_triceps", name: "5. Tríceps en Polea (Barra)", target: "2 series × 8-9 reps", type: "Aislamiento", tip: "Codos pegados a las costillas. Falla real.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""} ] }
-            ]},
-            martes: { title: "🥊 Tirón (Espalda/Bíceps) • 2500 Kcal", exercises: [
-                { id: "m_jalon", name: "1. Jalón al Pecho en Polea", target: "3 series × 8-9 reps", type: "Fuerza Pesada", tip: "Guía el movimiento bajando con los codos.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""}, {wt: "", reps: ""} ] },
-                { id: "m_remo_abd", name: "2. Remo en Polea al Abdomen", target: "3 series × 8-9 reps", type: "Fuerza Pesada", tip: "Saca pecho y aprieta la espalda 1 segundo al final.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""}, {wt: "", reps: ""} ] },
-                { id: "m_remo_apoy", name: "3. Remo Apoyado en Máquina", target: "3 series × 8-9 reps", type: "Fuerza Pesada", tip: "Evita dar tirones, mantén el pecho firme.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""}, {wt: "", reps: ""} ] },
-                { id: "m_curl_inc", name: "4. Curl Inclinado con Mancuernas", target: "2 series × 8-9 reps", type: "Aislamiento", tip: "Codos fijos atrás. Estira completo abajo.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""} ] },
-                { id: "m_curl_pred", name: "5. Curl en Banco Predicador", target: "2 series × 8-9 reps", type: "Aislamiento", tip: "Rango completo. Falla en la repetición 8 o 9.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""} ] },
-                { id: "m_curl_mart", name: "6. Curl Martillo", target: "2 series × 8-9 reps", type: "Fuerza Agarre", tip: "Fuerza de muñeca para sostener los impactos.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""} ] }
-            ]},
-            miercoles: { title: "🥊 Piernas de Acero + Abdomen • 2500 Kcal", exercises: [
-                { id: "mi_prensa", name: "1. Prensa de Piernas", target: "3 series × 8-10 reps", type: "Fuerza Pesada", tip: "¡La base de tu pegada! Baja controlado.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""}, {wt: "", reps: ""} ] },
-                { id: "mi_ext", name: "2. Extensión de Cuádriceps", target: "3 series × 10-12 reps", type: "Bombeo", tip: "Aprieta arriba un segundo.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""}, {wt: "", reps: ""} ] },
-                { id: "mi_fem", name: "3. Curl Femoral", target: "3 series × 8-10 reps", type: "Fuerza", tip: "Controla la subida lenta del peso.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""}, {wt: "", reps: ""} ] },
-                { id: "mi_abd_col", name: "4. Elevación de Piernas Colgado", target: "3 series × Al Fallo", type: "Abdomen", tip: "Sube las piernas usando la fuerza del core.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""}, {wt: "", reps: ""} ] }
-            ]},
-            jueves: { title: "🥊 Empuje (Repetición) • 2500 Kcal", exercises: [
-                { id: "j_press_inc", name: "1. Press Inclinado con Mancuernas", target: "3 series × 8-9 reps", type: "Fuerza Pesada", tip: "Empuja con máxima explosividad.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""}, {wt: "", reps: ""} ] },
-                { id: "j_press_maq", name: "2. Press Plano en Máquina", target: "3 series × 8-9 reps", type: "Fuerza Pesada", tip: "Falla de forma controlada y segura.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""}, {wt: "", reps: ""} ] }
-            ]},
-            viernes: { title: "🥊 Tirón + Abdomen • 2500 Kcal", exercises: [
-                { id: "v_jalon", name: "1. Jalón al Pecho en Polea", target: "3 series × 8-9 reps", type: "Fuerza Pesada", tip: "Espalda en 'V' de boxeador.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""}, {wt: "", reps: ""} ] },
-                { id: "v_curl_inc", name: "2. Curl Inclinado", target: "2 series × 8-9 reps", type: "Aislamiento", tip: "Solo 2 series al fallo real.", sets: [ {wt: "", reps: ""}, {wt: "", reps: ""} ] }
-            ]},
-            sabado: { title: "⚡ Sábado de Boxeo Cardio • 3000 Kcal", exercises: [
-                { id: "s_cuerda", name: "Fase 1: Salto de Cuerda", target: "3 Rounds × 3 min", type: "Cardio Box", tip: "Gira la cuerda solo con las muñecas.", sets: [ {wt: "Minutos", reps: "3"} ] },
-                { id: "s_saco", name: "Fase 2: Saco Pesado", target: "4 Rounds × 3 min", type: "Potencia", tip: "Ráfagas rápidas y golpes de poder.", sets: [ {wt: "Rounds", reps: "4"} ] }
-            ]},
-            domingo: { title: "🛌 Descanso Absoluto", exercises: [] }
-        };
+            <div class="categoria-titulo">⚡ TRÍCEPS (Remate)</div>
+            <div class="card-ejercicio">
+                <div class="ejercicio-nombre">5. Extensión en Polea Alta con Cuerda</div>
+                <div class="ejercicio-meta">3 series × 12-15 reps</div>
+                <div class="consejo-box">💡 Abre la cuerda por completo abajo del recorrido.</div>
+                <table class="tabla-series">
+                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
+                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                </table>
+            </div>
+            <div class="card-ejercicio">
+                <div class="ejercicio-nombre">6. Fondos en Paralelas o Máquina</div>
+                <div class="ejercicio-meta">3 series × Al Fallo</div>
+                <div class="consejo-box">💡 Tronco erguido para enfocar la tensión limpia en los tríceps.</div>
+                <table class="tabla-series">
+                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
+                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                </table>
+            </div>
+        </div>
 
-        let currentDay = 'lunes';
-        let chronoInterval = null;
-        let chronoSeconds = 0;
-        let isChronoRunning = false;
-        let timerInterval = null;
-        let timerSeconds = 180;
-        let isTimerActive = false;
+        <div id="rutina-jue" class="seccion-rutina">
+            <div class="categoria-titulo">🔥 PECHO (Fuerza Pesada)</div>
+            <div class="card-ejercicio">
+                <div class="ejercicio-nombre">1. Press Inclinado con Mancuernas</div>
+                <div class="ejercicio-meta">3 series × 8-9 reps</div>
+                <div class="consejo-box">💡 Falla en la repetición 8 o 9 ajustando bien las cargas.</div>
+                <table class="tabla-series">
+                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
+                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                </table>
+            </div>
+            <div class="card-ejercicio">
+                <div class="ejercicio-nombre">2. Press Plano en Máquina o Barra</div>
+                <div class="ejercicio-meta">3 series × 8-9 reps</div>
+                <div class="consejo-box">💡 Baja controlado y explota en la subida sin bloquear codos.</div>
+                <table class="tabla-series">
+                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
+                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                </table>
+            </div>
 
-        function toggleChrono() {
-            const btn = document.getElementById('btn-chrono-play');
-            if (isChronoRunning) {
-                clearInterval(chronoInterval);
-                btn.innerText = "▶ REANUDAR";
-                isChronoRunning = false;
-            } else {
-                chronoInterval = setInterval(() => {
-                    chronoSeconds++;
-                    let hrs = Math.floor(chronoSeconds / 3600);
-                    let mins = Math.floor((chronoSeconds % 3600) / 60);
-                    let secs = chronoSeconds % 60;
-                    document.getElementById('chrono-display').innerText = 
-                        `${hrs.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
-                }, 1000);
-                btn.innerText = "⏸ PAUSAR";
-                isChronoRunning = true;
-            }
-        }
+            <div class="categoria-titulo">🎯 HOMBRO (Construcción)</div>
+            <div class="card-ejercicio">
+                <div class="ejercicio-nombre">3. Press Militar con Mancuernas (Sentado)</div>
+                <div class="ejercicio-meta">3 series × 10-12 reps</div>
+                <div class="consejo-box">💡 Espalda firme contra el banco, sube controlado.</div>
+                <table class="tabla-series">
+                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
+                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                </table>
+            </div>
+            <div class="card-ejercicio">
+                <div class="ejercicio-nombre">4. Elevaciones Laterales con Polea o Mancuerna</div>
+                <div class="ejercicio-meta">3 series × 12-15 reps</div>
+                <div class="consejo-box">💡 Mantén un segundo arriba para bombear el deltoides lateral.</div>
+                <table class="tabla-series">
+                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
+                    <tr class="fila-serie"><td class="cell-num">S1</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S2</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                    <tr class="fila-serie"><td class="cell-num">S3</td><td class="cell-input"><input type="text" class="input-marca" placeholder="Kilos"></td><td class="cell-input"><input type="text" class="input-marca" placeholder="Reps"></td></tr>
+                </table>
+            </div>
 
-        function startRestTimer() {
-            const display = document.getElementById('timer-display');
-            const box = document.getElementById('timer-box');
-            const btn = document.getElementById('btn-timer-start');
-
-            if (isTimerActive) clearInterval(timerInterval);
-
-            timerSeconds = 180;
-            isTimerActive = true;
-            box.classList.remove('blink');
-            btn.innerText = "REINICIAR";
-
-            timerInterval = setInterval(() => {
-                timerSeconds--;
-                let m = Math.floor(timerSeconds / 60);
-                let s = timerSeconds % 60;
-                display.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-
-                if (timerSeconds <= 0) {
-                    clearInterval(timerInterval);
-                    display.innerText = "¡A DARLE!";
-                    box.classList.add('blink');
-                    btn.innerText = "INICIAR 3 MIN";
-                    isTimerActive = false;
-                }
-            }, 1000);
-        }
-
-        function selectDay(day) {
-            currentDay = day;
-            document.querySelectorAll('.btn-dia').forEach(btn => btn.classList.remove('activo'));
-            document.getElementById(`btn-${day}`).classList.add('activo');
-
-            const dayInfo = workoutData[day];
-            document.getElementById('routine-title').innerText = dayInfo.title;
-            renderExercises(dayInfo.exercises);
-        }
-
-        function renderExercises(exercises) {
-            const container = document.getElementById('exercises-container');
-            container.innerHTML = '';
-            if (exercises.length === 0) {
-                container.innerHTML = `<div style="text-align:center; padding:30px; color:#a1a1aa;">🛌 Hoy toca descansar el escudo.</div>`;
-                return;
-            }
-            exercises.forEach((ex) => {
-                let setsHtml = '';
-                ex.sets.forEach((set, setIdx) => {
-                    setsHtml += `
-                        <div class="row-set">
-                            <span class="num-set">S${setIdx + 1}</span>
-                            <input type="text" value="${set.wt || ''}" placeholder="${ex.id.startsWith('s_') ? 'Fase' : 'Kilos'}" oninput="workoutData['${currentDay}'].exercises.find(e => e.id === '${ex.id}').sets[${setIdx}].wt = this.value" class="input-box">
-                            <input type="number" value="${set.reps || ''}" placeholder="Reps" oninput="workoutData['${currentDay}'].exercises.find(e => e.id === '${ex.id}').sets[${setIdx}].reps = this.value" class="input-box">
-                        </div>`;
-                });
-                container.innerHTML += `
-                    <div class="card-ejercicio">
-                        <div class="header-ej">
-                            <div>
-                                <span class="badge">${ex.type}</span>
-                                <h4 class="nom-ej">${ex.name}</h4>
-                                <p class="target-ej">${ex.target}</p>
-                            </div>
-                            <button onclick="saveLog()" class="btn-reg">Guardar</button>
-                        </div>
-                        <div class="tip-ej">🥊 ${ex.tip}</div>
-                        <div>${setsHtml}</div>
-                    </div>`;
-            });
-        }
-
-        function saveLog() {
-            localStorage.setItem('sabueso_offline_v1', JSON.stringify(workoutData));
-            const toast = document.getElementById('toast');
-            toast.style.display = "block";
-            setTimeout(() => { toast.style.display = "none"; }, 2000);
-        }
-
-        window.onload = function() {
-            const saved = localStorage.getItem('sabueso_offline_v1');
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                for(let d in parsed) { if(workoutData[d]) workoutData[d] = parsed[d]; }
-            }
-            selectDay('lunes');
-        }
-    </script>
-</body>
-  </html>
-  
+            <div class="categoria-titulo">⚡ TRÍCEPS (Remate)</div>
+            <div class="card-ejercicio">
+                <div class="ejercicio-nombre">5. Extensión en Polea Alta con Cuerda</div>
+                <div class="ejercicio-meta">3 series × 12-15 reps</div>
+                <div class="consejo-box">💡 Abre la cuerda por completo abajo del recorrido.</div>
+                <table class="tabla-series">
+                    <tr><th>Serie</th><th>Kilos</th><th>Reps</th></tr>
+           
